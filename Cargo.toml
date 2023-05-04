@@ -1,0 +1,24 @@
+[package]
+name = "oxr_rusttime"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "openxr_rusty"
+crate-type = ["cdylib"]
+
+[dependencies]
+bytemuck = "1.13.1"
+color-eyre = "0.6.2"
+dashmap = "5.4.0"
+openxr-sys = { version = "0.9.3", features = ["mint"] }
+rustc-hash = "1.1.0"
+serde = "1.0.160"
+stardust-xr-schemas = "1.4.0"
+thiserror = "1.0.40"
+tokio = { version = "1.28.0", features = ["rt", "net", "bytes", "io-util", "sync"] }
+tracing = "0.1.38"
+oxr-proc-macros = {path = "oxr-proc-macros"}
+
+[workspace]
+members = ["oxr-proc-macros"]
