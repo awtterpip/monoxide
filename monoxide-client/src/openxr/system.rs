@@ -1,4 +1,4 @@
-use crate::prelude::*;
+use crate::openxr::prelude::*;
 
 /// # Docs
 /// See [xrGetSystem](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetSystem)

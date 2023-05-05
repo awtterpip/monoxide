@@ -1,4 +1,4 @@
-use crate::prelude::*;
+use crate::openxr::prelude::*;
 
 use std::ffi::{c_char, CStr};
 
@@ -39,21 +39,4 @@ pub fn str_from_const_char<'a>(ptr: *const c_char) -> Result<&'a str, XrResult> 
 pub fn copy_str_to_buffer(string: &str, buf: &mut [c_char]) {
     bytemuck::cast_slice_mut(&mut buf[..string.len()]).copy_from_slice(string.as_bytes());
     buf[string.len()] = 0;
-}
-
-pub trait Handle: Sized {
-    type HandleType;
-
-    fn raw(&self) -> u64;
-    fn get_mut<'a>(self) -> Result<&'a mut Self::HandleType, XrResult> {
-        let handle = self.raw();
-        if handle == 0 {
-            Err(XrResult::ERROR_HANDLE_INVALID)
-        } else {
-            Ok(unsafe { &mut *(handle as *mut Self::HandleType) })
-        }
-    }
-    fn destroy(self) -> Result<(), XrResult> {
-        Ok(())
-    }
 }

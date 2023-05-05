@@ -17,3 +17,6 @@ monoxide-protocol = { workspace = true }
 # External dependencies
 openxr-sys = { workspace = true }
 bytemuck = { workspace = true }
+dashmap = { workspace = true }
+rustc-hash = { workspace = true }
+once_cell = { workspace = true }
