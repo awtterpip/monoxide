@@ -1,6 +1,6 @@
 use crate::client::openxr::{util::copy_str_to_buffer, XrResult};
 use openxr_sys::{Instance, InstanceCreateInfo, InstanceProperties, StructureType, Version};
-use oxr_proc_macros::openxr;
+use proc_macros::openxr;
 
 /// # Safety
 /// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrCreateInstance

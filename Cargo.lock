@@ -300,6 +300,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "monoxide"
+version = "0.1.0"
+dependencies = [
+ "bytemuck",
+ "color-eyre",
+ "dashmap",
+ "openxr-sys",
+ "proc-macros",
+ "rustc-hash",
+ "serde",
+ "stardust-xr-schemas",
+ "thiserror",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
 name = "num_enum"
 version = "0.5.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -376,31 +393,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c1b04fb49957986fdce4d6ee7a65027d55d4b6d2265e5848bbb507b58ccfdb6f"
 
 [[package]]
-name = "oxr-proc-macros"
-version = "0.1.0"
-dependencies = [
- "quote",
- "syn 2.0.15",
-]
-
-[[package]]
-name = "oxr_rusttime"
-version = "0.1.0"
-dependencies = [
- "bytemuck",
- "color-eyre",
- "dashmap",
- "openxr-sys",
- "oxr-proc-macros",
- "rustc-hash",
- "serde",
- "stardust-xr-schemas",
- "thiserror",
- "tokio",
- "tracing",
-]
-
-[[package]]
 name = "parking_lot_core"
 version = "0.9.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -460,6 +452,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2b63bdb0cd06f1f4dedf69b254734f9b45af66e4a031e42a7480257d9898b435"
 dependencies = [
  "unicode-ident",
+]
+
+[[package]]
+name = "proc-macros"
+version = "0.1.0"
+dependencies = [
+ "quote",
+ "syn 2.0.15",
 ]
 
 [[package]]

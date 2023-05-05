@@ -7,7 +7,7 @@ use openxr_sys::{
     InteractionProfileSuggestedBinding, Path, Session, SessionActionSetsAttachInfo,
 };
 use std::ffi::c_char;
-use oxr_proc_macros::openxr;
+use proc_macros::openxr;
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateActionSet

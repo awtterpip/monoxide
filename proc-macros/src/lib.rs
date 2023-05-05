@@ -33,7 +33,6 @@ pub fn openxr(attr: TokenStream, item: TokenStream) -> TokenStream {
         }),
         ..func.clone()
     };
-    println!("{}", new_func.to_token_stream());
     quote! {
         #[no_mangle]
         #new_func

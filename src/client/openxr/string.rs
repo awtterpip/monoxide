@@ -5,7 +5,7 @@ use crate::client::openxr::{
     XrResult,
 };
 use std::ffi::c_char;
-use oxr_proc_macros::openxr;
+use proc_macros::openxr;
 
 /// # Safety
 /// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrResultToString

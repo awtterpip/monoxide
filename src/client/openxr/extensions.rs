@@ -1,5 +1,5 @@
 use openxr_sys::MND_HEADLESS_EXTENSION_NAME;
-use oxr_proc_macros::openxr;
+use proc_macros::openxr;
 
 use crate::client::openxr::{
     oxr::ExtensionProperties,

@@ -17,7 +17,7 @@ use oxr::{
     pfn::VoidFunction,
     ApiLayerProperties, Instance, CURRENT_API_VERSION,
 };
-use oxr_proc_macros::openxr;
+use proc_macros::openxr;
 use std::{
     ffi::c_char,
     mem::{size_of, transmute},

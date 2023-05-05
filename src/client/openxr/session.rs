@@ -2,7 +2,7 @@ use crate::client::openxr::{
     oxr::{Instance, Session, SessionCreateInfo},
     XrResult,
 };
-use oxr_proc_macros::openxr;
+use proc_macros::openxr;
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateSession
@@ -21,3 +21,4 @@ pub unsafe fn xr_create_session(
 pub unsafe fn xr_destroy_session(_session: Session) -> Result<(), XrResult> {
     todo!()
 }
+
