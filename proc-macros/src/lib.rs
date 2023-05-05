@@ -2,7 +2,7 @@ use proc_macro::TokenStream;
 use syn::token::Comma;
 use syn::{ FnArg, ItemFn, Pat, Signature, parse_quote, Block};
 use syn::punctuated::{Pair, Punctuated};
-use quote::{quote, ToTokens};
+use quote::{quote};
 
 #[proc_macro_attribute]
 pub fn openxr(attr: TokenStream, item: TokenStream) -> TokenStream {
