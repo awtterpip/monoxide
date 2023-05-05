@@ -1,4 +1,4 @@
-use super::protocol::{Message, Protocol};
+use crate::protocol::{Message, Protocol};
 use color_eyre::eyre::Result;
 use rustc_hash::FxHashMap;
 use stardust_xr_schemas::flex::{
@@ -52,7 +52,7 @@ impl MessageReceiver {
     fn new(
         read: OwnedReadHalf,
         pending_future_rx: PendingFutureReceiver,
-        send_handle: MessageSenderHandle,
+        _send_handle: MessageSenderHandle,
     ) -> Self {
         MessageReceiver {
             read,

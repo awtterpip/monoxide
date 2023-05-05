@@ -1,0 +1,8 @@
+[package]
+name = "monoxide-server"
+version.workspace = true
+version.edition = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]

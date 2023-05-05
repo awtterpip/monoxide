@@ -1,13 +1,7 @@
-use crate::client::openxr::XrResult;
-use openxr_sys::{
-    EnvironmentBlendMode, Instance, SystemGetInfo, SystemId, SystemProperties,
-    ViewConfigurationProperties, ViewConfigurationType, ViewConfigurationView,
-};
+use crate::prelude::*;
 
-use proc_macros::openxr;
-
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetSystem
+/// # Docs
+/// See [xrGetSystem](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetSystem)
 #[openxr(xrGetSystem)]
 pub unsafe fn xr_get_system(
     _instance: Instance,
@@ -17,8 +11,8 @@ pub unsafe fn xr_get_system(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetSystemProperties
+/// # Docs
+/// See [xrGetSystemProperties](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetSystemProperties)
 #[openxr(xrGetSystemProperties)]
 pub unsafe fn xr_get_system_properties(
     _instance: Instance,
@@ -28,8 +22,8 @@ pub unsafe fn xr_get_system_properties(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateViewConfigurations
+/// # Docs
+/// See [xrEnumerateViewConfigurations](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateViewConfigurations)
 #[openxr(xrEnumerateViewConfigurations)]
 pub unsafe fn xr_enumerate_view_configurations(
     _instance: Instance,
@@ -41,8 +35,8 @@ pub unsafe fn xr_enumerate_view_configurations(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetViewConfigurationProperties
+/// # Docs
+/// See [xrGetViewConfigurationProperties](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetViewConfigurationProperties)
 #[openxr(xrGetViewConfigurationProperties)]
 pub unsafe fn xr_get_view_configuration_properties(
     _instance: Instance,
@@ -53,8 +47,8 @@ pub unsafe fn xr_get_view_configuration_properties(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateViewConfigurationViews
+/// # Docs
+/// See [xrEnumerateViewConfigurationViews](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateViewConfigurationViews)
 #[openxr(xrEnumerateViewConfigurationViews)]
 pub unsafe fn xr_enumerate_view_configuration_views(
     _instance: Instance,
@@ -67,8 +61,8 @@ pub unsafe fn xr_enumerate_view_configuration_views(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateEnvironmentBlendModes
+/// # Docs
+/// See [xrEnumerateEnvironmentBlendModes](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateEnvironmentBlendModes)
 #[openxr(xrEnumerateEnvironmentBlendModes)]
 pub unsafe fn xr_enumerate_environment_blend_modes(
     _instance: Instance,

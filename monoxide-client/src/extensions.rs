@@ -1,15 +1,11 @@
-use openxr_sys::MND_HEADLESS_EXTENSION_NAME;
-use proc_macros::openxr;
+use crate::prelude::*;
 
-use crate::client::openxr::{
-    oxr::ExtensionProperties,
-    util::{copy_str_to_buffer, enumerate},
-    XrResult,
-};
-use std::{ffi::c_char, ptr};
+use std::ffi::c_char;
+use std::ptr;
 
-/// # Safety
-/// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateInstanceExtensionProperties
+/// Used to determine extensions that are available to an application 
+/// # Docs
+/// See [xrEnumerateInstanceExtensionProperties](https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateInstanceExtensionProperties)
 #[openxr(xrEnumerateInstanceExtensionProperties)]
 pub unsafe fn xr_enumerate_instance_extension_properties(
     _layer_name: *const c_char,

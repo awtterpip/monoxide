@@ -1,19 +1,7 @@
-use crate::client::openxr::XrResult;
+use crate::prelude::*;
+
 use std::ffi::{c_char, CStr};
 
-macro_rules! oxr_fns {
-	($s:expr,$($f:ident),*) => {
-		match $s {
-			$(
-				stringify!($f) => Ok(unsafe { std::mem::transmute($f as usize) }),
-			)*
-			_ => Err(XrResult::ERROR_HANDLE_INVALID),
-		}
-	};
-}
-
-/// # Safety
-/// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateInstanceExtensionProperties
 pub unsafe fn enumerate<I: Clone>(
     input_count: u32,
     output_count: &mut Option<u32>,
@@ -52,22 +40,6 @@ pub fn copy_str_to_buffer(string: &str, buf: &mut [c_char]) {
     bytemuck::cast_slice_mut(&mut buf[..string.len()]).copy_from_slice(string.as_bytes());
     buf[string.len()] = 0;
 }
-
-// pub unsafe fn get_next_chain<F>(first: &F) -> Vec<LoaderInitInfoBaseHeaderKHR> {
-//     // really gotta improve this tbh
-
-//     let mut chain: Vec<LoaderInitInfoBaseHeaderKHR> = vec![*std::mem::transmute::<
-//         &F,
-//         &LoaderInitInfoBaseHeaderKHR,
-//     >(first)];
-//     while let Some(next) = chain
-//         .last()
-//         .and_then(|c| (c.next.is_null()).then_some(c.next))
-//     {
-//         chain.push(*std::mem::transmute::<_, *const LoaderInitInfoBaseHeaderKHR>(next));
-//     }
-//     chain
-// }
 
 pub trait Handle: Sized {
     type HandleType;

@@ -1,0 +1,16 @@
+[package]
+name = "monoxide-protocol"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+stardust-xr-schemas = { workspace = true }
+serde = { workspace = true }
+openxr-sys = { workspace = true }
+color-eyre = { workspace = true }
+rustc-hash = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }

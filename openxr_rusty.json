@@ -1,7 +1,0 @@
-{
-    "file_format_version": "1.0.0",
-    "runtime": {
-        "name": "Rusty OpenXR",
-        "library_path": "./target/debug/libopenxr_rusty.so"
-    }
-}

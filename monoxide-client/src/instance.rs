@@ -1,9 +1,7 @@
-use crate::client::openxr::{util::copy_str_to_buffer, XrResult};
-use openxr_sys::{Instance, InstanceCreateInfo, InstanceProperties, StructureType, Version};
-use proc_macros::openxr;
+use crate::prelude::*;
 
-/// # Safety
-/// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrCreateInstance
+/// # Docs
+/// See [xrCreateInstance](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateInstance)
 #[openxr(xrCreateInstance)]
 pub unsafe fn xr_create_instance(
     _info: &InstanceCreateInfo,
@@ -12,15 +10,15 @@ pub unsafe fn xr_create_instance(
     todo!()
 }
 
-/// # Safety
-/// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrDestroyInstance
+/// # Docs
+/// See [xrDestroyInstance](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrDestroyInstance)
 #[openxr(xrDestroyInstance)]
 pub unsafe fn xr_destroy_instance(_instance: Instance) -> Result<(), XrResult> {
     todo!()
 }
 
-/// # Safety
-/// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrGetInstanceProperties
+/// # Docs
+/// See [xrGetInstanceProperties](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetInstanceProperties)
 #[openxr(xrGetInstanceProperties)]
 pub unsafe fn xr_get_instance_properties(
     _instance: Instance,

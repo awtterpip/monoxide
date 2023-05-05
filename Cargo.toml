@@ -1,24 +1,24 @@
-[package]
-name = "monoxide"
+[workspace]
+members = ["proc-macros", "monoxide-client", "monoxide-protocol", "monoxide-server"]
+
+[workspace.package]
 version = "0.1.0"
 edition = "2021"
 
-[lib]
-name = "openxr_rusty"
-crate-type = ["cdylib"]
+[workspace.dependencies]
+# Monoxide crates
+proc-macros = { path = "proc-macros" }
+monoxide-client = { path = "monoxide-client" }
+monoxide-server = { path = "monoxide-server" }
+monoxide-protocol = { path = "monoxide-protocol"}
 
-[dependencies]
+# External dependencies
 bytemuck = "1.13.1"
 color-eyre = "0.6.2"
-dashmap = "5.4.0"
-openxr-sys = { version = "0.9.3", features = ["mint"] }
-rustc-hash = "1.1.0"
+openxr-sys = "0.9.3"
 serde = "1.0.160"
-stardust-xr-schemas = "1.4.0"
 thiserror = "1.0.40"
-tokio = { version = "1.28.0", features = ["rt", "net", "bytes", "io-util", "sync"] }
+tokio = { version = "1.28.0", features = ["rt", "net", "bytes", "io-util", "sync"]}
+stardust-xr-schemas = "1.4.0"
+rustc-hash = "1.1.0"
 tracing = "0.1.38"
-proc-macros = {path = "proc-macros"}
-
-[workspace]
-members = ["proc-macros"]

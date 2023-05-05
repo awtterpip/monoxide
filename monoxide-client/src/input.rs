@@ -1,16 +1,9 @@
-use crate::client::openxr::XrResult;
-use openxr_sys::{
-    Action, ActionCreateInfo, ActionSet, ActionSetCreateInfo, ActionStateBoolean, ActionStateFloat,
-    ActionStateGetInfo, ActionStatePose, ActionStateVector2f, ActionsSyncInfo,
-    BoundSourcesForActionEnumerateInfo, HapticActionInfo, HapticBaseHeader,
-    InputSourceLocalizedNameGetInfo, Instance, InteractionProfileState,
-    InteractionProfileSuggestedBinding, Path, Session, SessionActionSetsAttachInfo,
-};
-use std::ffi::c_char;
-use proc_macros::openxr;
+use crate::prelude::*;
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateActionSet
+use std::ffi::c_char;
+
+/// # Docs
+/// See [xrCreateActionSet](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateActionSet)
 #[openxr(xrCreateActionSet)]
 pub unsafe fn xr_create_action_set(
     _instance: Instance,
@@ -20,15 +13,15 @@ pub unsafe fn xr_create_action_set(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrDestroyActionSet
+/// # Docs
+/// See [xrDestroyActionSet](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrDestroyActionSet)
 #[openxr(xrDestroyActionSet)]
 pub unsafe fn xr_destroy_action_set(_action_set: ActionSet) -> Result<(), XrResult> {
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrApplyHapticFeedback
+/// # Docs
+/// See [xrApplyHapticFeedback](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrApplyHapticFeedback)
 #[openxr(xrApplyHapticFeedback)]
 pub unsafe fn xr_apply_haptic_feedback(
     _session: Session,
@@ -38,8 +31,8 @@ pub unsafe fn xr_apply_haptic_feedback(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrStopHapticFeedback
+/// # Docs
+/// See [xrStopHapticFeedback](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrStopHapticFeedback)
 #[openxr(xrStopHapticFeedback)]
 pub unsafe fn xr_stop_haptic_feedback(
     _session: Session,
@@ -48,8 +41,8 @@ pub unsafe fn xr_stop_haptic_feedback(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetActionStateBoolean
+/// # Docs
+/// See [xrGetActionStateBoolean](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetActionStateBoolean)
 #[openxr(xrGetActionStateBoolean)]
 pub unsafe fn xr_get_action_state_boolean(
     _session: Session,
@@ -59,8 +52,8 @@ pub unsafe fn xr_get_action_state_boolean(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetActionStateFloat
+/// # Docs
+/// See [xrGetActionStateFloat](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetActionStateFloat)
 #[openxr(xrGetActionStateFloat)]
 pub unsafe fn xr_get_action_state_float(
     _session: Session,
@@ -70,8 +63,8 @@ pub unsafe fn xr_get_action_state_float(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetActionStateVector2f
+/// # Docs
+/// See [xrGetActionStateVector2f](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetActionStateVector2f)
 #[openxr(xrGetActionStateVector2f)]
 pub unsafe fn xr_get_action_state_vector_2f(
     _session: Session,
@@ -81,8 +74,8 @@ pub unsafe fn xr_get_action_state_vector_2f(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetActionStatePose
+/// # Docs
+/// See [xrGetActionStatePose](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetActionStatePose)
 #[openxr(xrGetActionStatePose)]
 pub unsafe fn xr_get_action_state_pose(
     _session: Session,
@@ -100,8 +93,8 @@ pub unsafe fn xr_get_action_state_pose(
 //     }
 // }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateAction([a-z](?![A-Z]))*(([a-z])([A-Z0-9])([a-z](?![A-Z]))*)+
+/// # Docs
+/// See [xrCreateAction](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateAction)
 #[openxr(xrCreateAction)]
 pub unsafe fn xr_create_action(
     _action_set: ActionSet,
@@ -111,15 +104,15 @@ pub unsafe fn xr_create_action(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrDestroyAction
+/// # Docs
+/// See [xrDestroyAction](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrDestroyAction)
 #[openxr(xrDestroyAction)]
 pub unsafe fn xr_destroy_action(_action: Action) -> Result<(), XrResult> {
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrSuggestInteractionProfileBindings
+/// # Docs
+/// See [xrSuggestInteractionProfileBindings](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrSuggestInteractionProfileBindings)
 #[openxr(xrSuggestInteractionProfileBindings)]
 pub unsafe fn xr_suggest_interaction_profile_bindings(
     _instance: Instance,
@@ -128,8 +121,8 @@ pub unsafe fn xr_suggest_interaction_profile_bindings(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrAttachSessionActionSets
+/// # Docs
+/// See [xrAttachSessionActionSets](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrAttachSessionActionSets)
 #[openxr(xrAttachSessionActionSets)]
 pub unsafe fn xr_attach_session_action_sets(
     _session: Session,
@@ -138,8 +131,8 @@ pub unsafe fn xr_attach_session_action_sets(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetCurrentInteractionProfile
+/// # Docs
+/// See [xrGetCurrentInteractionProfile](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetCurrentInteractionProfile)
 #[openxr(xrGetCurrentInteractionProfile)]
 pub unsafe fn xr_get_current_interaction_profile(
     _session: Session,
@@ -149,8 +142,8 @@ pub unsafe fn xr_get_current_interaction_profile(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrSyncActions
+/// # Docs
+/// See [xrSyncActions](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrSyncActions)
 #[openxr(xrSyncActions)]
 pub unsafe fn xr_sync_actions(
     _session: Session,
@@ -159,8 +152,8 @@ pub unsafe fn xr_sync_actions(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateBoundSourcesForAction
+/// # Docs
+/// See [xrEnumerateBoundSourcesForAction](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateBoundSourcesForAction)
 #[openxr(xrEnumerateBoundSourcesForAction)]
 pub unsafe fn xr_enumerate_bound_sources_for_action(
     _session: Session,
@@ -172,8 +165,8 @@ pub unsafe fn xr_enumerate_bound_sources_for_action(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetInputSourceLocalizedName
+/// # Docs
+/// See [xrGetInputSourceLocalizedName](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetInputSourceLocalizedName)
 #[openxr(xrGetInputSourceLocalizedName)]
 pub unsafe fn xr_get_input_source_localized_name(
     _session: Session,

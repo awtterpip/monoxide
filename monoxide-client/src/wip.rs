@@ -1,17 +1,14 @@
-use crate::client::openxr::XrResult;
-use openxr_sys::*;
-use std::result::Result;
-use proc_macros::openxr;
+use crate::prelude::*;
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrDestroySpace
+/// # Docs
+/// See [xrDestroySpace](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrDestroySpace)
 #[openxr(xrDestroySpace)]
 pub unsafe fn xr_destroy_space(_space: Space) -> Result<(), XrResult> {
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateSwapchainFormats
+/// # Docs
+/// See [xrEnumerateSwapchainFormats](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateSwapchainFormats)
 #[openxr(xrEnumerateSwapchainFormats)]
 pub unsafe fn xr_enumerate_swapchain_formats(
     _session: Session,
@@ -22,8 +19,8 @@ pub unsafe fn xr_enumerate_swapchain_formats(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateSwapchain
+/// # Docs
+/// See [xrCreateSwapchain](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateSwapchain)
 #[openxr(xrCreateSwapchain)]
 pub unsafe fn xr_create_swapchain(
     _session: Session,
@@ -33,15 +30,15 @@ pub unsafe fn xr_create_swapchain(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrDestroySwapchain
+/// # Docs
+/// See [xrDestroySwapchain](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrDestroySwapchain)
 #[openxr(xrDestroySwapchain)]
 pub unsafe fn xr_destroy_swapchain(_swapchain: Swapchain) -> Result<(), XrResult> {
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateSwapchainImages
+/// # Docs
+/// See [xrEnumerateSwapchainImages](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateSwapchainImages)
 #[openxr(xrEnumerateSwapchainImages)]
 pub unsafe fn xr_enumerate_swapchain_images(
     _swapchain: Swapchain,
@@ -52,8 +49,8 @@ pub unsafe fn xr_enumerate_swapchain_images(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrAcquireSwapchainImage
+/// # Docs
+/// See [xrAcquireSwapchainImage](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrAcquireSwapchainImage)
 #[openxr(xrAcquireSwapchainImage)]
 pub unsafe fn xr_acquire_swapchain_image(
     _swapchain: Swapchain,
@@ -63,8 +60,8 @@ pub unsafe fn xr_acquire_swapchain_image(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrWaitSwapchainImage
+/// # Docs
+/// See [xrWaitSwapchainImage](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrWaitSwapchainImage)
 #[openxr(xrWaitSwapchainImage)]
 pub unsafe fn xr_wait_swapchain_image(
     _swapchain: Swapchain,
@@ -73,8 +70,8 @@ pub unsafe fn xr_wait_swapchain_image(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrReleaseSwapchainImage
+/// # Docs
+/// See [xrReleaseSwapchainImage](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrReleaseSwapchainImage)
 #[openxr(xrReleaseSwapchainImage)]
 pub unsafe fn xr_release_swapchain_image(
     _swapchain: Swapchain,
@@ -83,8 +80,8 @@ pub unsafe fn xr_release_swapchain_image(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrBeginSession
+/// # Docs
+/// See [xrBeginSession](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrBeginSession)
 #[openxr(xrBeginSession)]
 pub unsafe fn xr_begin_session(
     _session: Session,
@@ -93,22 +90,22 @@ pub unsafe fn xr_begin_session(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEndSession
+/// # Docs
+/// See [xrEndSession](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEndSession)
 #[openxr(xrEndSession)]
 pub unsafe fn xr_end_session(_session: Session) -> Result<(), XrResult> {
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrRequestExitSession
+/// # Docs
+/// See [xrRequestExitSession](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrRequestExitSession)
 #[openxr(xrRequestExitSession)]
 pub unsafe fn xr_request_exit_session(_session: Session) -> Result<(), XrResult> {
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateReferenceSpaces
+/// # Docs
+/// See [xrEnumerateReferenceSpaces](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateReferenceSpaces)
 #[openxr(xrEnumerateReferenceSpaces)]
 pub unsafe fn xr_enumerate_reference_spaces(
     _session: Session,
@@ -119,8 +116,8 @@ pub unsafe fn xr_enumerate_reference_spaces(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateReferenceSpace
+/// # Docs
+/// See [xrCreateReferenceSpace](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateReferenceSpace)
 #[openxr(xrCreateReferenceSpace)]
 pub unsafe fn xr_create_reference_space(
     _session: Session,
@@ -130,8 +127,8 @@ pub unsafe fn xr_create_reference_space(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateActionSpace
+/// # Docs
+/// See [xrCreateActionSpace](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateActionSpace)
 #[openxr(xrCreateActionSpace)]
 pub unsafe fn xr_create_action_space(
     _session: Session,
@@ -141,8 +138,8 @@ pub unsafe fn xr_create_action_space(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrLocateSpace
+/// # Docs
+/// See [xrLocateSpace](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrLocateSpace)
 #[openxr(xrLocateSpace)]
 pub unsafe fn xr_locate_space(
     _space: Space,
@@ -153,8 +150,8 @@ pub unsafe fn xr_locate_space(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrBeginFrame
+/// # Docs
+/// See [xrBeginFrame](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrBeginFrame)
 #[openxr(xrBeginFrame)]
 pub unsafe fn xr_begin_frame(
     _session: Session,
@@ -163,8 +160,8 @@ pub unsafe fn xr_begin_frame(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrLocateViews
+/// # Docs
+/// See [xrLocateViews](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrLocateViews)
 #[openxr(xrLocateViews)]
 pub unsafe fn xr_locate_views(
     _session: Session,
@@ -177,8 +174,8 @@ pub unsafe fn xr_locate_views(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEndFrame
+/// # Docs
+/// See [xrEndFrame](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEndFrame)
 #[openxr(xrEndFrame)]
 pub unsafe fn xr_end_frame(
     _session: Session,
@@ -187,8 +184,8 @@ pub unsafe fn xr_end_frame(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrWaitFrame
+/// # Docs
+/// See [xrWaitFrame](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrWaitFrame)
 #[openxr(xrWaitFrame)]
 pub unsafe fn xr_wait_frame(
     _session: Session,
@@ -198,8 +195,8 @@ pub unsafe fn xr_wait_frame(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrPollEvent
+/// # Docs
+/// See [xrPollEvent](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrPollEvent)
 #[openxr(xrPollEvent)]
 pub unsafe fn xr_poll_event(
     _instance: Instance,
@@ -208,8 +205,8 @@ pub unsafe fn xr_poll_event(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetReferenceSpaceBoundsRect
+/// # Docs
+/// See [xrGetReferenceSpaceBoundsRect](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetReferenceSpaceBoundsRect)
 #[openxr(xrGetReferenceSpaceBoundsRect)]
 pub unsafe fn xr_get_reference_space_bounds_rect(
     _session: Session,

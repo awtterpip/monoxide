@@ -1,14 +1,9 @@
-use openxr_sys::Path;
+use crate::prelude::*;
 
-use crate::client::openxr::{
-    oxr::{Instance, StructureType, MAX_RESULT_STRING_SIZE, MAX_STRUCTURE_NAME_SIZE},
-    XrResult,
-};
 use std::ffi::c_char;
-use proc_macros::openxr;
 
-/// # Safety
-/// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrResultToString
+/// # Docs
+/// See [xrResultToString](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrResultToString)
 #[openxr(xrResultToString)]
 pub unsafe fn xr_result_to_string(
     _instance: Instance,
@@ -178,8 +173,8 @@ pub unsafe fn xr_result_to_string(
     Ok(())
 }
 
-/// # Safety
-/// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrStructureTypeToString
+/// # Docs
+/// See [xrStructureTypeToString](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrStructureTypeToString)
 #[openxr(xrStructureTypeToString)]
 pub unsafe fn xr_structure_type_to_string(
     _instance: Instance,
@@ -607,8 +602,8 @@ pub unsafe fn xr_structure_type_to_string(
     Ok(())
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrStringToPath
+/// # Docs
+/// See [xrStringToPath](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrStringToPath)
 #[openxr(xrStringToPath)]
 pub unsafe fn xr_string_to_path(
     _instance: Instance,
@@ -618,8 +613,8 @@ pub unsafe fn xr_string_to_path(
     todo!()
 }
 
-/// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrPathToString
+/// # Docs
+/// See [xrPathToString](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrPathToString)
 #[openxr(xrPathToString)]
 pub unsafe fn xr_path_to_string(
     _instance: Instance,
