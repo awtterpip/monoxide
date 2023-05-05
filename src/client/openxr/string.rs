@@ -5,15 +5,16 @@ use crate::client::openxr::{
     XrResult,
 };
 use std::ffi::c_char;
+use oxr_proc_macros::openxr;
 
 /// # Safety
 /// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrResultToString
-#[no_mangle]
-pub unsafe extern "system" fn xrResultToString(
+#[openxr(xrResultToString)]
+pub unsafe fn xr_result_to_string(
     _instance: Instance,
     value: XrResult,
     buffer: *mut c_char,
-) -> XrResult {
+) -> Result<(), XrResult> {
     let string = match value {
         XrResult::SUCCESS => Some("SUCCESS"),
         XrResult::TIMEOUT_EXPIRED => Some("TIMEOUT_EXPIRED"),
@@ -174,17 +175,17 @@ pub unsafe extern "system" fn xrResultToString(
         string.len().min(MAX_RESULT_STRING_SIZE),
     );
 
-    XrResult::SUCCESS
+    Ok(())
 }
 
 /// # Safety
 /// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrStructureTypeToString
-#[no_mangle]
-pub unsafe extern "system" fn xrStructureTypeToString(
+#[openxr(xrStructureTypeToString)]
+pub unsafe fn xr_structure_type_to_string(
     _instance: Instance,
     value: StructureType,
     buffer: *mut c_char,
-) -> XrResult {
+) -> Result<(), XrResult> {
     let string = match value {
         StructureType::UNKNOWN => Some("UNKNOWN"),
         StructureType::API_LAYER_PROPERTIES => Some("API_LAYER_PROPERTIES"),
@@ -603,33 +604,29 @@ pub unsafe extern "system" fn xrStructureTypeToString(
         string.len().min(MAX_STRUCTURE_NAME_SIZE),
     );
 
-    XrResult::SUCCESS
+    Ok(())
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrStringToPath
-#[no_mangle]
-pub unsafe extern "system" fn xrStringToPath(
+#[openxr(xrStringToPath)]
+pub unsafe fn xr_string_to_path(
     _instance: Instance,
     _path_string: *const c_char,
     _path: &mut Path,
-) -> XrResult {
-    wrap_oxr! {
-        todo!()
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrPathToString
-#[no_mangle]
-pub unsafe extern "system" fn xrPathToString(
+#[openxr(xrPathToString)]
+pub unsafe fn xr_path_to_string(
     _instance: Instance,
     _path: Path,
     _buffer_capacity_input: u32,
     _buffer_count_output: &mut Option<u32>,
     _buffer: *mut c_char,
-) -> XrResult {
-    wrap_oxr! {
-        todo!()
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }

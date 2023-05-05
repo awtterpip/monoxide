@@ -17,6 +17,7 @@ use oxr::{
     pfn::VoidFunction,
     ApiLayerProperties, Instance, CURRENT_API_VERSION,
 };
+use oxr_proc_macros::openxr;
 use std::{
     ffi::c_char,
     mem::{size_of, transmute},
@@ -64,20 +65,19 @@ pub extern "system" fn xrNegotiateLoaderRuntimeInterface(
 
 /// # Safety
 /// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrGetInstanceProcAddr
-#[no_mangle]
-pub unsafe extern "system" fn xrGetInstanceProcAddr(
+#[openxr(xrGetInstanceProcAddr)]
+pub unsafe fn xr_get_instance_proc_addr(
     instance: Instance,
     name: *const c_char,
     function: &mut VoidFunction,
-) -> XrResult {
-    wrap_oxr! {
-        let instance = if instance.into_raw() == 0_u64 {
-            None
-        } else {
-            Some(instance)
-        };
-        *function = get_instance_proc_addr(instance, str_from_const_char(name)?)?;
-    }
+) -> Result<(), XrResult> {
+    let instance = if instance.into_raw() == 0_u64 {
+        None
+    } else {
+        Some(instance)
+    };
+    *function = get_instance_proc_addr(instance, str_from_const_char(name)?)?;
+    Ok(())
 }
 
 fn get_instance_proc_addr(
@@ -97,19 +97,18 @@ fn get_instance_proc_addr(
 
 /// # Safety
 /// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateApiLayerProperties
-#[no_mangle]
-pub unsafe extern "system" fn xrEnumerateApiLayerProperties(
+#[openxr(xrEnumerateApiLayerProperties)]
+pub unsafe fn xr_enumerate_api_layer_properties(
     property_capacity_input: u32,
     property_count_output: &mut Option<u32>,
     properties: *mut ApiLayerProperties,
-) -> XrResult {
-    wrap_oxr! {
-        let api_layers = [];
-        enumerate(
-            property_capacity_input,
-            property_count_output,
-            properties,
-            &api_layers,
-        )?;
-    }
+) -> Result<(), XrResult> {
+    let api_layers = [];
+    enumerate(
+        property_capacity_input,
+        property_count_output,
+        properties,
+        &api_layers,
+    )?;
+    Ok(())
 }

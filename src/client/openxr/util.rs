@@ -1,17 +1,6 @@
 use crate::client::openxr::XrResult;
 use std::ffi::{c_char, CStr};
 
-macro_rules! wrap_oxr {
-	($($b:tt)+) => {
-		#[allow(unreachable_code, unused_mut)]
-        let mut body = move || -> std::result::Result<(), openxr_sys::Result> { {$($b)*} Ok(()) };
-		match ((body)()) {
-			Ok(_) => openxr_sys::Result::SUCCESS,
-			Err(e) => e,
-		}
-	};
-}
-
 macro_rules! oxr_fns {
 	($s:expr,$($f:ident),*) => {
 		match $s {

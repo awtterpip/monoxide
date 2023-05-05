@@ -4,89 +4,79 @@ use openxr_sys::{
     ViewConfigurationProperties, ViewConfigurationType, ViewConfigurationView,
 };
 
+use oxr_proc_macros::openxr;
+
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetSystem
-#[no_mangle]
-pub extern "system" fn xrGetSystem(
+#[openxr(xrGetSystem)]
+pub unsafe fn xr_get_system(
     _instance: Instance,
     _get_info: &SystemGetInfo,
     _system_id: &mut SystemId,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetSystemProperties
-#[no_mangle]
-pub unsafe extern "system" fn xrGetSystemProperties(
+#[openxr(xrGetSystemProperties)]
+pub unsafe fn xr_get_system_properties(
     _instance: Instance,
     _system_id: SystemId,
     _properties: &mut SystemProperties,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateViewConfigurations
-#[no_mangle]
-pub unsafe extern "system" fn xrEnumerateViewConfigurations(
+#[openxr(xrEnumerateViewConfigurations)]
+pub unsafe fn xr_enumerate_view_configurations(
     _instance: Instance,
     _system_id: SystemId,
     _view_configuration_type_capacity_input: u32,
     _view_configuration_type_count_output: &mut u32,
     _view_configuration_types: &mut ViewConfigurationType,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetViewConfigurationProperties
-#[no_mangle]
-pub unsafe extern "system" fn xrGetViewConfigurationProperties(
+#[openxr(xrGetViewConfigurationProperties)]
+pub unsafe fn xr_get_view_configuration_properties(
     _instance: Instance,
     _system_id: SystemId,
     _view_configuration_type: ViewConfigurationType,
     _configuration_properties: &mut ViewConfigurationProperties,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateViewConfigurationViews
-#[no_mangle]
-pub unsafe extern "system" fn xrEnumerateViewConfigurationViews(
+#[openxr(xrEnumerateViewConfigurationViews)]
+pub unsafe fn xr_enumerate_view_configuration_views(
     _instance: Instance,
     _system_id: SystemId,
     _view_configuration_type: ViewConfigurationType,
     _view_capacity_input: u32,
     _view_count_output: &mut Option<u32>,
     _views_ptr: *mut ViewConfigurationView,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateEnvironmentBlendModes
-#[no_mangle]
-pub unsafe extern "system" fn xrEnumerateEnvironmentBlendModes(
+#[openxr(xrEnumerateEnvironmentBlendModes)]
+pub unsafe fn xr_enumerate_environment_blend_modes(
     _instance: Instance,
     _system_id: SystemId,
     _view_configuration_type: ViewConfigurationType,
     _environment_blend_mode_capacity_input: u32,
     _environment_blend_mode_count_output: &mut u32,
     _environment_blend_modes: &mut EnvironmentBlendMode,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }

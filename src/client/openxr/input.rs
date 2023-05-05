@@ -45,61 +45,51 @@ pub unsafe fn xr_stop_haptic_feedback(
     _session: Session,
     _haptic_action_info: &HapticActionInfo,
 ) -> Result<(), XrResult> {
-    wrap_oxr! {
-        todo!();
-    }
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetActionStateBoolean
-#[no_mangle]
-pub unsafe extern "system" fn xrGetActionStateBoolean(
+#[openxr(xrGetActionStateBoolean)]
+pub unsafe fn xr_get_action_state_boolean(
     _session: Session,
     _get_info: &ActionStateGetInfo,
     _state: &mut ActionStateBoolean,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetActionStateFloat
-#[no_mangle]
-pub unsafe extern "system" fn xrGetActionStateFloat(
+#[openxr(xrGetActionStateFloat)]
+pub unsafe fn xr_get_action_state_float(
     _session: Session,
     _get_info: &ActionStateGetInfo,
     _state: &mut ActionStateFloat,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetActionStateVector2f
-#[no_mangle]
-pub unsafe extern "system" fn xrGetActionStateVector2f(
+#[openxr(xrGetActionStateVector2f)]
+pub unsafe fn xr_get_action_state_vector_2f(
     _session: Session,
     _get_info: &ActionStateGetInfo,
     _state: &mut ActionStateVector2f,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetActionStatePose
-#[no_mangle]
-pub unsafe extern "system" fn xrGetActionStatePose(
+#[openxr(xrGetActionStatePose)]
+pub unsafe fn xr_get_action_state_pose(
     _session: Session,
     _get_info: &ActionStateGetInfo,
     _state: &mut ActionStatePose,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 // impl Handle for Action {
@@ -111,102 +101,86 @@ pub unsafe extern "system" fn xrGetActionStatePose(
 // }
 
 /// # Safety
-/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateAction
-#[no_mangle]
-pub unsafe extern "system" fn xrCreateAction(
+/// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateAction([a-z](?![A-Z]))*(([a-z])([A-Z0-9])([a-z](?![A-Z]))*)+
+#[openxr(xrCreateAction)]
+pub unsafe fn xr_create_action(
     _action_set: ActionSet,
     _create_info: &ActionCreateInfo,
     _action: &mut Action,
-) -> XrResult {
-    wrap_oxr! {
-        todo!()
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrDestroyAction
-#[no_mangle]
-pub unsafe extern "system" fn xrDestroyAction(_action: Action) -> XrResult {
-    wrap_oxr! {
-        todo!()
-    }
+#[openxr(xrDestroyAction)]
+pub unsafe fn xr_destroy_action(_action: Action) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrSuggestInteractionProfileBindings
-#[no_mangle]
-pub unsafe extern "system" fn xrSuggestInteractionProfileBindings(
+#[openxr(xrSuggestInteractionProfileBindings)]
+pub unsafe fn xr_suggest_interaction_profile_bindings(
     _instance: Instance,
     _suggested_bindings: &InteractionProfileSuggestedBinding,
-) -> XrResult {
-    wrap_oxr! {
-        todo!()
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrAttachSessionActionSets
-#[no_mangle]
-pub unsafe extern "system" fn xrAttachSessionActionSets(
+#[openxr(xrAttachSessionActionSets)]
+pub unsafe fn xr_attach_session_action_sets(
     _session: Session,
     _attach_info: &SessionActionSetsAttachInfo,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetCurrentInteractionProfile
-#[no_mangle]
-pub unsafe extern "system" fn xrGetCurrentInteractionProfile(
+#[openxr(xrGetCurrentInteractionProfile)]
+pub unsafe fn xr_get_current_interaction_profile(
     _session: Session,
     _top_level_user_path: Path,
     _interaction_profile: &mut InteractionProfileState,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrSyncActions
-#[no_mangle]
-pub unsafe extern "system" fn xrSyncActions(
+#[openxr(xrSyncActions)]
+pub unsafe fn xr_sync_actions(
     _session: Session,
     _sync_info: &ActionsSyncInfo,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateBoundSourcesForAction
-#[no_mangle]
-pub unsafe extern "system" fn xrEnumerateBoundSourcesForAction(
+#[openxr(xrEnumerateBoundSourcesForAction)]
+pub unsafe fn xr_enumerate_bound_sources_for_action(
     _session: Session,
     _enumerate_info: &BoundSourcesForActionEnumerateInfo,
     _source_capacity_input: u32,
     _source_count_output: &mut u32,
     _sources: &mut Path,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
 
 /// # Safety
 /// https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetInputSourceLocalizedName
-#[no_mangle]
-pub unsafe extern "system" fn xrGetInputSourceLocalizedName(
+#[openxr(xrGetInputSourceLocalizedName)]
+pub unsafe fn xr_get_input_source_localized_name(
     _session: Session,
     _get_info: &InputSourceLocalizedNameGetInfo,
     _buffer_capacity_input: u32,
     _buffer_count_output: &mut u32,
     _buffer: &mut c_char,
-) -> XrResult {
-    wrap_oxr! {
-        todo!();
-    }
+) -> Result<(), XrResult> {
+    todo!()
 }
