@@ -53,10 +53,16 @@ pub fn handle(attr: TokenStream, item: TokenStream) -> TokenStream {
         #[doc(hidden)]
         static REGISTRY: once_cell::sync::Lazy<dashmap::DashMap<u64, #ty, std::hash::BuildHasherDefault<rustc_hash::FxHasher>>> = once_cell::sync::Lazy::new(|| std::default::Default::default());
         const COUNTER: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
-        
+
         #[doc(hidden)]
         impl crate::handle::Handle for #attr {
             type HandleType = #ty;
+
+            fn new(item: Self::HandleType) -> Self {
+                let id = COUNTER.fetch_update(std::sync::atomic::Ordering::SeqCst, std::sync::atomic::Ordering::SeqCst, |x| Some(x+1)).unwrap();
+                REGISTRY.insert(id, item);
+                Self::from_raw(id)
+            }
 
             fn raw(&self) -> u64 {
                 self.into_raw()

@@ -1,8 +1,14 @@
 use crate::prelude::*;
-use openxr_sys::Instance;
+use openxr_sys::{Instance, InstanceCreateInfo};
 
 #[handle(Instance)]
 pub struct XrInstance {
-    // TODO!
+
+}
+
+impl XrInstance {
+    pub fn new(info: InstanceCreateInfo) -> Result<Self, XrResult> {
+        todo!()
+    }
 }
 

@@ -1,20 +1,21 @@
-use crate::{openxr::prelude::*};
+use crate::{openxr::prelude::*, instance::XrInstance};
 
 /// # Docs
 /// See [xrCreateInstance](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrCreateInstance)
 #[openxr(xrCreateInstance)]
 pub unsafe fn xr_create_instance(
-    _info: &InstanceCreateInfo,
-    _instance: &mut Instance,
+    info: &InstanceCreateInfo,
+    instance: &mut Instance,
 ) -> Result<(), XrResult> {
-    todo!()
+    *instance = Instance::new(XrInstance::new(*info)?);
+    Ok(())
 }
 
 /// # Docs
 /// See [xrDestroyInstance](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrDestroyInstance)
 #[openxr(xrDestroyInstance)]
-pub unsafe fn xr_destroy_instance(_instance: Instance) -> Result<(), XrResult> {
-    todo!()
+pub unsafe fn xr_destroy_instance(instance: Instance) -> Result<(), XrResult> {
+    instance.destroy()
 }
 
 /// # Docs
