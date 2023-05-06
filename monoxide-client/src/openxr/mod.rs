@@ -29,7 +29,9 @@ use openxr_sys::loader::*;
 use std::ffi::c_char;
 use pfn::VoidFunction;
 
-/// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrNegotiateLoaderRuntimeInterface
+/// 
+/// # Docs
+/// [xrNegotiateLoaderRuntimeInterface](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrNegotiateLoaderRuntimeInterface)
 #[openxr(xrNegotiateLoaderRuntimeInterface)]
 pub fn xr_negotiate_loader_runtime_interface(
     loader_info: &XrNegotiateLoaderInfo,
@@ -66,8 +68,8 @@ pub fn xr_negotiate_loader_runtime_interface(
     Ok(())
 }
 
-/// # Safety
-/// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrGetInstanceProcAddr
+/// # Docs
+/// [xrGetInstanceProcAddr](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetInstanceProcAddr)
 #[openxr(xrGetInstanceProcAddr)]
 pub unsafe fn xr_get_instance_proc_addr(
     instance: Instance,
@@ -78,17 +80,41 @@ pub unsafe fn xr_get_instance_proc_addr(
         Ok(())
 }
 
+/// # Docs
+/// [xrEnumerateApiLayerProperties](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateApiLayerProperties)
+#[openxr(xrEnumerateApiLayerProperties)]
+pub unsafe fn xr_enumerate_api_layer_properties(
+    property_capacity_input: u32,
+    property_count_output: &mut Option<u32>,
+    properties: *mut ApiLayerProperties,
+) -> Result<(), XrResult> {
+        let api_layers = [];
+        enumerate(
+            property_capacity_input,
+            property_count_output,
+            properties,
+            &api_layers,
+        )?;
+        Ok(())
+}
+
 oxr_fns!{
     get_instance_proc_addr 
+    // functions that don't require an instance
     [
+        // openxr/extensions.rs
         xrEnumerateInstanceExtensionProperties,
+        // openxr/mod.rs
         xrEnumerateApiLayerProperties,
+        // openxr/instance.rs
         xrCreateInstance,
     ]
+    // functions that require an instance
     [
+        // openxr/mod.rs
         xrNegotiateLoaderRuntimeInterface,
         xrGetInstanceProcAddr,
-        xrEnumerateApiLayerProperties,
+        // openxr/input.rs
         xrCreateActionSet,
         xrDestroyActionSet,
         xrApplyHapticFeedback,
@@ -105,21 +131,25 @@ oxr_fns!{
         xrSyncActions,
         xrEnumerateBoundSourcesForAction,
         xrGetInputSourceLocalizedName,
-        xrCreateInstance,
+        // openxr/instance.rs
         xrDestroyInstance,
         xrGetInstanceProperties,
+        // openxr/session.rs
         xrCreateSession,
         xrDestroySession,
+        // openxr/string.rs
         xrResultToString,
         xrStructureTypeToString,
         xrStringToPath,
         xrPathToString,
+        // openxr/system.rs
         xrGetSystem,
         xrGetSystemProperties,
         xrEnumerateViewConfigurations,
         xrGetViewConfigurationProperties,
         xrEnumerateViewConfigurationViews,
         xrEnumerateEnvironmentBlendModes,
+        // openxr/wip.rs
         xrDestroySpace,
         xrEnumerateSwapchainFormats,
         xrCreateSwapchain,
@@ -145,20 +175,3 @@ oxr_fns!{
     ]
 }
 
-/// # Safety
-/// https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateApiLayerProperties
-#[openxr(xrEnumerateApiLayerProperties)]
-pub unsafe fn xr_enumerate_api_layer_properties(
-    property_capacity_input: u32,
-    property_count_output: &mut Option<u32>,
-    properties: *mut ApiLayerProperties,
-) -> Result<(), XrResult> {
-        let api_layers = [];
-        enumerate(
-            property_capacity_input,
-            property_count_output,
-            properties,
-            &api_layers,
-        )?;
-        Ok(())
-}

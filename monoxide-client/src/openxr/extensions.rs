@@ -5,7 +5,7 @@ use std::ptr;
 
 /// Used to determine extensions that are available to an application 
 /// # Docs
-/// See [xrEnumerateInstanceExtensionProperties](https://registry.khronos.org/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateInstanceExtensionProperties)
+/// See [xrEnumerateInstanceExtensionProperties](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrEnumerateInstanceExtensionProperties)
 #[openxr(xrEnumerateInstanceExtensionProperties)]
 pub unsafe fn xr_enumerate_instance_extension_properties(
     _layer_name: *const c_char,

@@ -6,6 +6,8 @@ use rustc_hash::FxHasher;
 pub trait Handle: Sized {
     type HandleType;
 
+    fn new(item: Self::HandleType) -> Self;
+
     fn raw(&self) -> u64;
 
     fn get_mut<'a>(self) -> Result<RefMut<'a, u64, Self::HandleType, BuildHasherDefault<FxHasher>>, openxr_sys::Result>;

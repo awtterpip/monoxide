@@ -52,7 +52,8 @@ pub fn handle(attr: TokenStream, item: TokenStream) -> TokenStream {
 
         #[doc(hidden)]
         static REGISTRY: once_cell::sync::Lazy<dashmap::DashMap<u64, #ty, std::hash::BuildHasherDefault<rustc_hash::FxHasher>>> = once_cell::sync::Lazy::new(|| std::default::Default::default());
-
+        const COUNTER: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
+        
         #[doc(hidden)]
         impl crate::handle::Handle for #attr {
             type HandleType = #ty;
@@ -135,28 +136,18 @@ pub fn oxr_fns(tokens: TokenStream) -> TokenStream {
     let input = parse_macro_input!(tokens as OxrFns);
     let name = input.name;
     let inst = input.inst.items.iter();
-    let no_inst1 = input.no_inst.items.iter();
-    let no_inst2 = no_inst1.clone();
-
+    let no_inst = input.no_inst.items.iter();
     quote! {
         fn #name(instance: openxr_sys::Instance, name: &str) -> std::result::Result<openxr_sys::pfn::VoidFunction, openxr_sys::Result> {
-            if instance.is_null() {
-                match name {
-                    #(
-                        stringify!(#no_inst1) => Ok(unsafe { std::mem::transmute(#no_inst1 as usize) }),
-                    )*
-                    _ => Err(openxr_sys::Result::ERROR_HANDLE_INVALID)
-                }
-            } else {
-                match name {
-                    #(
-                        stringify!(#no_inst2) => Ok(unsafe { std::mem::transmute(#no_inst2 as usize) }),
-                    )*
-                    #(
-                        stringify!(#inst) => Ok(unsafe { std::mem::transmute(#inst as usize) }),
-                    )*
-                    _ => Err(openxr_sys::Result::ERROR_FUNCTION_UNSUPPORTED)
-                }
+            match (name, instance.is_null()) {
+                #(
+                    (stringify!(#no_inst), _) => Ok(unsafe { std::mem::transmute(#no_inst as usize)}),
+                )*
+                (_, true) => Err(openxr_sys::Result::ERROR_HANDLE_INVALID),
+                #(
+                    (stringify!(#inst), false) => Ok(unsafe { std::mem::transmute(#inst as usize)}),
+                )*
+                (_, false) => Err(openxr_sys::Result::ERROR_FUNCTION_UNSUPPORTED),
             }
         }
     }.into()
