@@ -1,6 +1,23 @@
-use crate::openxr::prelude::*;
+use crate::prelude::*;
 
 use std::ffi::{c_char, CStr};
+
+macro_rules! extension {
+    ($name:literal, $ver:literal) => {
+        pub const PROPERTIES: openxr_sys::ExtensionProperties = openxr_sys::ExtensionProperties {
+            ty: openxr_sys::ExtensionProperties::TYPE,
+            next: std::ptr::null_mut(),
+            extension_name: proc_macros::fixed_length_str!($name, 128),
+            extension_version: $ver,
+        };
+    };
+}
+
+pub fn str_slice_from_const_arr<'a>(ptr: *const *const c_char, len: usize) -> &'a [*const c_char] {
+    unsafe {
+        std::slice::from_raw_parts(ptr, len)
+    }
+}
 
 pub unsafe fn enumerate<I: Clone>(
     input_count: u32,

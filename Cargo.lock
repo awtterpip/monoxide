@@ -300,6 +300,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "monoxide"
+version = "0.1.0"
+dependencies = [
+ "monoxide-client",
+ "monoxide-server",
+]
+
+[[package]]
 name = "monoxide-client"
 version = "0.1.0"
 dependencies = [
@@ -310,6 +318,7 @@ dependencies = [
  "openxr-sys",
  "proc-macros",
  "rustc-hash",
+ "tokio",
 ]
 
 [[package]]

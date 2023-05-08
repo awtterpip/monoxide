@@ -1,5 +1,3 @@
-#[macro_use]
-pub mod util;
 pub mod extensions;
 pub mod input;
 pub mod instance;
@@ -19,8 +17,9 @@ pub use string::*;
 mod prelude {
     pub use crate::prelude::*;
     pub use openxr_sys::*;
+    pub use openxr_sys::platform::*;
     pub use std::result::Result;
-    pub use crate::openxr::util::*;
+    pub use crate::util::*;
 }
 use std::mem::size_of;
 
@@ -76,6 +75,7 @@ pub unsafe fn xr_get_instance_proc_addr(
     name: *const c_char,
     function: *mut Option<VoidFunction>,
 ) -> Result<(), XrResult> {
+        
         *function = Some(get_instance_proc_addr(instance, str_from_const_char(name)?)?);
         Ok(())
 }
@@ -172,6 +172,15 @@ oxr_fns!{
         xrPollEvent,
         xrGetReferenceSpaceBoundsRect,
 
+    ]
+    // extension functions
+    [
+        "XR_KHR_vulkan_enable2": [
+            vulkan_enable2::xrCreateVulkanInstanceKHR,
+            vulkan_enable2::xrCreateVulkanDeviceKHR,
+            vulkan_enable2::xrGetVulkanGraphicsDevice2KHR,
+            vulkan_enable2::xrGetVulkanGraphicsRequirements2KHR,
+        ]
     ]
 }
 

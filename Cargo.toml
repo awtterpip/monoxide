@@ -1,5 +1,6 @@
 [workspace]
-members = ["proc-macros", "monoxide-client", "monoxide-protocol", "monoxide-server"]
+default-members = ["monoxide"]
+members = ["proc-macros", "monoxide-client", "monoxide-protocol", "monoxide-server", "monoxide"]
 
 [workspace.package]
 version = "0.1.0"

@@ -1,7 +1,7 @@
 use proc_macro::TokenStream;
 use syn::parse::Parse;
 use syn::token::Bracket;
-use syn::{ FnArg, ItemFn, Pat, Signature, parse_quote, Block, ItemStruct, Type, Ident, Token, bracketed, parse_macro_input};
+use syn::{ FnArg, ItemFn, Pat, Signature, parse_quote, Block, ItemStruct, Type, Ident, Token, bracketed, parse_macro_input, LitStr, LitInt, Path};
 use syn::punctuated::{Pair, Punctuated};
 use quote::{quote};
 
@@ -108,8 +108,9 @@ pub fn handle(attr: TokenStream, item: TokenStream) -> TokenStream {
 
 struct OxrFns {
     name: Ident,
-    no_inst: Array<Ident>,
-    inst: Array<Ident>,
+    no_inst: Array<Path>,
+    inst: Array<Path>,
+    extensions: Array<NamedArray<Path>>,
 }
 
 impl Parse for OxrFns {
@@ -117,7 +118,8 @@ impl Parse for OxrFns {
         Ok(Self {
             name: input.parse()?,
             no_inst: input.parse()?,
-            inst: input.parse()?
+            inst: input.parse()?,
+            extensions: input.parse()?,
         })
     }
 }
@@ -137,24 +139,95 @@ impl<T: Parse> Parse for Array<T> {
     }
 }
 
+struct NamedArray<T> {
+    name: LitStr,
+    _colon_token: Token![:],
+    array: Array<T>,
+}
+
+impl <T: Parse> Parse for NamedArray<T> {
+    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
+        Ok(Self {
+            name: input.parse()?,
+            _colon_token: input.parse()?,
+            array: input.parse()?,
+        })
+    }
+}
+
 #[proc_macro]
 pub fn oxr_fns(tokens: TokenStream) -> TokenStream {
     let input = parse_macro_input!(tokens as OxrFns);
     let name = input.name;
     let inst = input.inst.items.iter();
+    let inst_str = inst.clone().map(|f| f.segments.last().unwrap().ident.clone());
     let no_inst = input.no_inst.items.iter();
-    quote! {
+    let no_inst_str = no_inst.clone().map(|f| f.segments.last().unwrap().ident.clone());
+    let extensions = input.extensions.items.iter().map(|f| {
+        let val = f.name.value();
+        let val = val.as_str();
+        let items = f.array.items.iter().map(|f| {
+            let f_str = f.segments.last().unwrap().ident.clone();
+            quote!(
+                #[cfg(feature = #val)]
+                (stringify!(#f_str), Ok(instance)) if instance.extensions.contains(&std::string::String::from(#val)) => Ok(unsafe { std::mem::transmute(#f as usize)}),
+            )
+        });
+        quote!(
+            #(
+                #items
+            )*
+        )
+    });
+    let q = quote! {
         fn #name(instance: openxr_sys::Instance, name: &str) -> std::result::Result<openxr_sys::pfn::VoidFunction, openxr_sys::Result> {
-            match (name, instance.is_null()) {
+            match (name, instance.get()) {
                 #(
-                    (stringify!(#no_inst), _) => Ok(unsafe { std::mem::transmute(#no_inst as usize)}),
+                    (stringify!(#no_inst_str), _) => Ok(unsafe { std::mem::transmute(#no_inst as usize)}),
                 )*
-                (_, true) => Err(openxr_sys::Result::ERROR_HANDLE_INVALID),
+                (_, Err(_)) => Err(openxr_sys::Result::ERROR_HANDLE_INVALID),
                 #(
-                    (stringify!(#inst), false) => Ok(unsafe { std::mem::transmute(#inst as usize)}),
+                    (stringify!(#inst_str), Ok(_)) => Ok(unsafe { std::mem::transmute(#inst as usize)}),
                 )*
-                (_, false) => Err(openxr_sys::Result::ERROR_FUNCTION_UNSUPPORTED),
+                #(
+                    #extensions
+                )*
+                (_, Ok(_)) => Err(openxr_sys::Result::ERROR_FUNCTION_UNSUPPORTED),
             }
         }
+    }.into();
+    println!("{}", q);
+    q
+}
+
+struct FixedLenStr {
+    string: LitStr,
+    _comma: Token![,],
+    len: LitInt,
+}
+
+impl Parse for FixedLenStr {
+    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
+        Ok(Self {
+            string: input.parse()?,
+            _comma: input.parse()?,
+            len: input.parse()?,
+        })
+    }
+}
+
+#[proc_macro]
+pub fn fixed_length_str(tokens: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(tokens as FixedLenStr);
+    let len = input.len.base10_parse::<usize>().unwrap();
+    let string = input.string.value();
+    let mut chars = string.chars();
+    let mut vec = vec![0; len];
+    vec.fill_with(|| chars.next().map(|f| f as i8).unwrap_or(0));
+    let vec = vec.iter();
+    quote!{
+        [
+            #(#vec,)*
+        ]
     }.into()
 }

@@ -5,4 +5,8 @@ version.edition = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[features]
+XR_MND_headless = []
+XR_KHR_vulkan_enable2 = []
+
 [dependencies]
