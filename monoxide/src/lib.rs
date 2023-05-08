@@ -1,1 +1,1 @@
-pub use monoxide_client::openxr::*;
+pub use monoxide_client::*;

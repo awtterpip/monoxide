@@ -179,7 +179,7 @@ pub fn oxr_fns(tokens: TokenStream) -> TokenStream {
             )*
         )
     });
-    let q = quote! {
+    quote! {
         fn #name(instance: openxr_sys::Instance, name: &str) -> std::result::Result<openxr_sys::pfn::VoidFunction, openxr_sys::Result> {
             match (name, instance.get()) {
                 #(
@@ -195,9 +195,7 @@ pub fn oxr_fns(tokens: TokenStream) -> TokenStream {
                 (_, Ok(_)) => Err(openxr_sys::Result::ERROR_FUNCTION_UNSUPPORTED),
             }
         }
-    }.into();
-    println!("{}", q);
-    q
+    }.into()
 }
 
 struct FixedLenStr {

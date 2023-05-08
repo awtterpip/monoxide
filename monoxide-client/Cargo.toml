@@ -22,3 +22,4 @@ dashmap = { workspace = true }
 rustc-hash = { workspace = true }
 once_cell = { workspace = true }
 tokio = { workspace = true }
+dirs = { workspace = true }

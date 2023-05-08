@@ -9,9 +9,10 @@ crate-type = ["cdylib"]
 
 [features]
 default = ["XR_MND_headless", "XR_KHR_vulkan_enable2"]
-XR_MND_headless = ["monoxide-client/XR_MND_headless", "monoxide-server/XR_MND_headless"]
-XR_KHR_vulkan_enable2 = ["monoxide-client/XR_KHR_vulkan_enable2", "monoxide-server/XR_KHR_vulkan_enable2"]
+XR_MND_headless = ["monoxide-client/XR_MND_headless"]
+XR_KHR_vulkan_enable2 = ["monoxide-client/XR_KHR_vulkan_enable2"]
 
 [dependencies]
-monoxide-client = { path = "../monoxide-client" }
-monoxide-server = { path = "../monoxide-server"}
+monoxide-client = { workspace = true }
+monoxide-server = { workspace = true }
+tokio = { workspace = true }
