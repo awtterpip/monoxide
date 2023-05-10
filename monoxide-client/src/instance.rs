@@ -1,8 +1,10 @@
 use crate::prelude::*;
+
+use dirs::runtime_dir;
 use monoxide_protocol::messenger::*;
 use openxr_sys::{Instance, InstanceCreateInfo};
-use dirs::runtime_dir;
-use tokio::{runtime::Runtime, net::UnixStream};
+use tokio::runtime::Runtime;
+use tokio::net::UnixStream;
 
 #[handle(Instance)]
 pub struct XrInstance {
@@ -12,7 +14,7 @@ pub struct XrInstance {
 }
 
 impl XrInstance {
-    pub fn new(info: InstanceCreateInfo) -> Result<Self, XrResult> {
+    pub fn new(info: InstanceCreateInfo) -> Result<Self, XrErr> {
         let mut extensions = vec![];
         for str in str_slice_from_const_arr(info.enabled_extension_names, info.enabled_extension_count as usize) {
             let str = str_from_const_char(*str)?;
@@ -21,15 +23,15 @@ impl XrInstance {
         let runtime = tokio::runtime::Builder::new_current_thread()
             .enable_io()
             .build()
-            .map_err(|_| XrResult::ERROR_RUNTIME_UNAVAILABLE)?;
+            .map_err(|_| XrErr::ERROR_RUNTIME_UNAVAILABLE)?;
         let (mut sender, mut reciever) = 
             runtime.block_on(async {
                 let socket_path = runtime_dir()
-		            .ok_or_else(|| XrResult::ERROR_RUNTIME_UNAVAILABLE)?
+		            .ok_or_else(|| XrErr::ERROR_RUNTIME_UNAVAILABLE)?
 		            .join("monoxide");
                 match UnixStream::connect(socket_path).await {
                     Ok(stream) => Ok(create(stream)),
-                    Err(_) => Err(XrResult::ERROR_RUNTIME_UNAVAILABLE),
+                    Err(_) => Err(XrErr::ERROR_RUNTIME_UNAVAILABLE),
                 }
             })?;
         let handle = sender.handle();

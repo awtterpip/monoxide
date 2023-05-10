@@ -1,52 +1,45 @@
-pub mod extensions;
-pub mod input;
-pub mod instance;
-pub mod session;
-pub mod system;
-pub mod wip;
-pub mod string;
-
-pub use extensions::*;
-pub use input::*;
-pub use instance::*;
-pub use session::*;
-pub use system::*;
-pub use wip::*;
-pub use string::*;
-
+mod instance;
+mod system;
+mod string;
+mod spaces;
+mod views;
+mod session;
+mod swapchain;
+mod frame;
+mod input;
+mod extensions;
 mod prelude {
     pub use crate::prelude::*;
     pub use openxr_sys::*;
     pub use openxr_sys::platform::*;
+    pub use openxr_sys::pfn::*;
+    pub use openxr_sys::loader::*;
     pub use std::result::Result;
-    pub use crate::util::*;
+    pub use std::ffi::c_char;
 }
+
 use std::mem::size_of;
 
-use prelude::*;
-use openxr_sys::loader::*;
-use std::ffi::c_char;
-use pfn::VoidFunction;
+pub use prelude::*;
 
-/// 
 /// # Docs
 /// [xrNegotiateLoaderRuntimeInterface](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrNegotiateLoaderRuntimeInterface)
 #[openxr(xrNegotiateLoaderRuntimeInterface)]
 pub fn xr_negotiate_loader_runtime_interface(
     loader_info: &XrNegotiateLoaderInfo,
     runtime_request: &mut XrNegotiateRuntimeRequest,
-) -> Result<(), XrResult> {
+) -> XrResult {
     if loader_info.ty != XrNegotiateLoaderInfo::TYPE
         || loader_info.struct_version != XrNegotiateLoaderInfo::VERSION
         || loader_info.struct_size != size_of::<XrNegotiateLoaderInfo>()
     {
-        return Err(XrResult::ERROR_INITIALIZATION_FAILED);
+        return Err(XrErr::ERROR_INITIALIZATION_FAILED);
     }
     if runtime_request.ty != XrNegotiateRuntimeRequest::TYPE
         || runtime_request.struct_version != XrNegotiateRuntimeRequest::VERSION
         || loader_info.struct_size != size_of::<XrNegotiateRuntimeRequest>()
     {
-        return Err(XrResult::ERROR_INITIALIZATION_FAILED);
+        return Err(XrErr::ERROR_INITIALIZATION_FAILED);
     }
 
     if CURRENT_API_VERSION > loader_info.max_api_version
@@ -56,7 +49,7 @@ pub fn xr_negotiate_loader_runtime_interface(
             "OpenXR Runtime doesn't support major version {} < {} < {}",
             loader_info.max_api_version, CURRENT_API_VERSION, loader_info.min_api_version
         );
-        return Err(XrResult::ERROR_INITIALIZATION_FAILED);
+        return Err(XrErr::ERROR_INITIALIZATION_FAILED);
     }
 
     runtime_request.runtime_interface_version = CURRENT_LOADER_RUNTIME_VERSION;
@@ -71,13 +64,11 @@ pub fn xr_negotiate_loader_runtime_interface(
 /// [xrGetInstanceProcAddr](https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#xrGetInstanceProcAddr)
 #[openxr(xrGetInstanceProcAddr)]
 pub unsafe fn xr_get_instance_proc_addr(
-    instance: Instance,
-    name: *const c_char,
-    function: *mut Option<VoidFunction>,
-) -> Result<(), XrResult> {
-        
-        *function = Some(get_instance_proc_addr(instance, str_from_const_char(name)?)?);
-        Ok(())
+    _instance: Instance,
+    _name: *const c_char,
+    _function: *mut Option<VoidFunction>,
+) -> XrResult {
+    todo!()
 }
 
 /// # Docs
@@ -87,7 +78,7 @@ pub unsafe fn xr_enumerate_api_layer_properties(
     property_capacity_input: u32,
     property_count_output: &mut Option<u32>,
     properties: *mut ApiLayerProperties,
-) -> Result<(), XrResult> {
+) -> XrResult {
         let api_layers = [];
         enumerate(
             property_capacity_input,
@@ -97,90 +88,3 @@ pub unsafe fn xr_enumerate_api_layer_properties(
         )?;
         Ok(())
 }
-
-oxr_fns!{
-    get_instance_proc_addr 
-    // functions that don't require an instance
-    [
-        // openxr/extensions.rs
-        xrEnumerateInstanceExtensionProperties,
-        // openxr/mod.rs
-        xrEnumerateApiLayerProperties,
-        // openxr/instance.rs
-        xrCreateInstance,
-    ]
-    // functions that require an instance
-    [
-        // openxr/mod.rs
-        xrNegotiateLoaderRuntimeInterface,
-        xrGetInstanceProcAddr,
-        // openxr/input.rs
-        xrCreateActionSet,
-        xrDestroyActionSet,
-        xrApplyHapticFeedback,
-        xrStopHapticFeedback,
-        xrGetActionStateBoolean,
-        xrGetActionStateFloat,
-        xrGetActionStateVector2f,
-        xrGetActionStatePose,
-        xrCreateAction,
-        xrDestroyAction,
-        xrSuggestInteractionProfileBindings,
-        xrAttachSessionActionSets,
-        xrGetCurrentInteractionProfile,
-        xrSyncActions,
-        xrEnumerateBoundSourcesForAction,
-        xrGetInputSourceLocalizedName,
-        // openxr/instance.rs
-        xrDestroyInstance,
-        xrGetInstanceProperties,
-        // openxr/session.rs
-        xrCreateSession,
-        xrDestroySession,
-        // openxr/string.rs
-        xrResultToString,
-        xrStructureTypeToString,
-        xrStringToPath,
-        xrPathToString,
-        // openxr/system.rs
-        xrGetSystem,
-        xrGetSystemProperties,
-        xrEnumerateViewConfigurations,
-        xrGetViewConfigurationProperties,
-        xrEnumerateViewConfigurationViews,
-        xrEnumerateEnvironmentBlendModes,
-        // openxr/wip.rs
-        xrDestroySpace,
-        xrEnumerateSwapchainFormats,
-        xrCreateSwapchain,
-        xrDestroySwapchain,
-        xrEnumerateSwapchainImages,
-        xrAcquireSwapchainImage,
-        xrWaitSwapchainImage,
-        xrReleaseSwapchainImage,
-        xrBeginSession,
-        xrEndSession,
-        xrRequestExitSession,
-        xrEnumerateReferenceSpaces,
-        xrCreateReferenceSpace,
-        xrCreateActionSpace,
-        xrLocateSpace,
-        xrBeginFrame,
-        xrLocateViews,
-        xrEndFrame,
-        xrWaitFrame,
-        xrPollEvent,
-        xrGetReferenceSpaceBoundsRect,
-
-    ]
-    // extension functions
-    [
-        "XR_KHR_vulkan_enable2": [
-            vulkan_enable2::xrCreateVulkanInstanceKHR,
-            vulkan_enable2::xrCreateVulkanDeviceKHR,
-            vulkan_enable2::xrGetVulkanGraphicsDevice2KHR,
-            vulkan_enable2::xrGetVulkanGraphicsRequirements2KHR,
-        ]
-    ]
-}
-

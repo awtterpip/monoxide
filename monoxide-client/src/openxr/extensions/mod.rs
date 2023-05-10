@@ -1,4 +1,4 @@
-use crate::openxr::prelude::*;
+pub use super::prelude::*;
 
 #[cfg(feature = "XR_MND_headless")]
 pub mod headless;
@@ -16,7 +16,7 @@ pub unsafe fn xr_enumerate_instance_extension_properties(
     input_count: u32,
     output_count: &mut Option<u32>,
     items_ptr: *mut ExtensionProperties,
-) -> Result<(), XrResult> {
+) -> XrResult {
     if layer_name.is_null() {
         let extensions = [
             #[cfg(feature = "XR_MND_headless")]

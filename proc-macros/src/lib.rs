@@ -1,7 +1,7 @@
 use proc_macro::TokenStream;
 use syn::parse::Parse;
 use syn::token::Bracket;
-use syn::{ FnArg, ItemFn, Pat, Signature, parse_quote, Block, ItemStruct, Type, Ident, Token, bracketed, parse_macro_input, LitStr, LitInt, Path};
+use syn::{ FnArg, ItemFn, Pat, Signature, parse_quote, Block, ItemStruct, Type, Ident, Token, bracketed, parse_macro_input, LitStr, LitInt, Path, Expr};
 use syn::punctuated::{Pair, Punctuated};
 use quote::{quote};
 
@@ -52,55 +52,26 @@ pub fn handle(attr: TokenStream, item: TokenStream) -> TokenStream {
 
         #[doc(hidden)]
         static REGISTRY: once_cell::sync::Lazy<dashmap::DashMap<u64, #ty, std::hash::BuildHasherDefault<rustc_hash::FxHasher>>> = once_cell::sync::Lazy::new(|| std::default::Default::default());
-        const COUNTER: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
+        static COUNTER: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
 
         #[doc(hidden)]
         impl crate::handle::Handle for #attr {
             type HandleType = #ty;
 
-            fn new(item: Self::HandleType) -> Self {
-                let id = COUNTER.fetch_update(std::sync::atomic::Ordering::SeqCst, std::sync::atomic::Ordering::SeqCst, |x| Some(x+1)).unwrap();
-                REGISTRY.insert(id, item);
-                Self::from_raw(id)
-            }
-
-            fn raw(&self) -> u64 {
+            fn raw(self) -> u64 {
                 self.into_raw()
             }
 
-            fn get_mut<'a>(self) -> Result<dashmap::mapref::one::RefMut<'a, u64, Self::HandleType, std::hash::BuildHasherDefault<rustc_hash::FxHasher>>, openxr_sys::Result> {
-                if self.raw() == 0 {
-                    Err(openxr_sys::Result::ERROR_HANDLE_INVALID)
-                } else {
-                    REGISTRY.get_mut(&self.raw()).ok_or(openxr_sys::Result::ERROR_HANDLE_INVALID)
-                }
+            fn from(raw: u64) -> Self {
+                Self::from_raw(raw)
             }
 
-            fn get<'a>(self) -> Result<dashmap::mapref::one::Ref<'a, u64, Self::HandleType, std::hash::BuildHasherDefault<rustc_hash::FxHasher>>, openxr_sys::Result> {
-                if self.raw() == 0 {
-                    Err(openxr_sys::Result::ERROR_HANDLE_INVALID)
-                } else {
-                    REGISTRY.get(&self.raw()).ok_or(openxr_sys::Result::ERROR_HANDLE_INVALID)
-                }
+            fn registry<'a>() -> &'a once_cell::sync::Lazy<dashmap::DashMap<u64, #ty, std::hash::BuildHasherDefault<rustc_hash::FxHasher>>> {
+                &REGISTRY
             }
 
-            fn destroy(self) -> Result<(), openxr_sys::Result> {
-                if self.raw() == 0 {
-                    Err(openxr_sys::Result::ERROR_HANDLE_INVALID)
-                } else {
-                    match REGISTRY.remove(&self.raw()) {
-                        Some(_) => Ok(()),
-                        None => Err(openxr_sys::Result::ERROR_HANDLE_INVALID)
-                    }
-                }
-            }
-
-            fn is_null(self) -> bool {
-                if self.raw() == 0 {
-                    true
-                } else {
-                    REGISTRY.get(&self.raw()).is_none()
-                }
+            fn counter<'a>() -> &'a std::sync::atomic::AtomicU64 {
+                &COUNTER
             }
         }
     }.into()
@@ -198,34 +169,3 @@ pub fn oxr_fns(tokens: TokenStream) -> TokenStream {
     }.into()
 }
 
-struct FixedLenStr {
-    string: LitStr,
-    _comma: Token![,],
-    len: LitInt,
-}
-
-impl Parse for FixedLenStr {
-    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
-        Ok(Self {
-            string: input.parse()?,
-            _comma: input.parse()?,
-            len: input.parse()?,
-        })
-    }
-}
-
-#[proc_macro]
-pub fn fixed_length_str(tokens: TokenStream) -> TokenStream {
-    let input = parse_macro_input!(tokens as FixedLenStr);
-    let len = input.len.base10_parse::<usize>().unwrap();
-    let string = input.string.value();
-    let mut chars = string.chars();
-    let mut vec = vec![0; len];
-    vec.fill_with(|| chars.next().map(|f| f as i8).unwrap_or(0));
-    let vec = vec.iter();
-    quote!{
-        [
-            #(#vec,)*
-        ]
-    }.into()
-}

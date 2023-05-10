@@ -2,16 +2,7 @@ use crate::prelude::*;
 
 use std::ffi::{c_char, CStr};
 
-macro_rules! extension {
-    ($name:literal, $ver:literal) => {
-        pub const PROPERTIES: openxr_sys::ExtensionProperties = openxr_sys::ExtensionProperties {
-            ty: openxr_sys::ExtensionProperties::TYPE,
-            next: std::ptr::null_mut(),
-            extension_name: proc_macros::fixed_length_str!($name, 128),
-            extension_version: $ver,
-        };
-    };
-}
+
 
 pub fn str_slice_from_const_arr<'a>(ptr: *const *const c_char, len: usize) -> &'a [*const c_char] {
     unsafe {
@@ -24,16 +15,16 @@ pub unsafe fn enumerate<I: Clone>(
     output_count: &mut Option<u32>,
     items_ptr: *mut I,
     items: &[I],
-) -> Result<(), XrResult> {
+) -> XrResult {
     // if output_count.is_none() {
-    // 	return Err(XrResult::ERROR_VALIDATION_FAILURE);
+    // 	return Err(XrErr::ERROR_VALIDATION_FAILURE);
     // }
     *output_count = Some(items.len() as u32);
     if input_count == 0 || items_ptr.is_null() {
         return Ok(());
     }
     if input_count < items.len() as u32 {
-        return Err(XrResult::ERROR_SIZE_INSUFFICIENT);
+        return Err(XrErr::ERROR_SIZE_INSUFFICIENT);
     }
     if items_ptr.is_null() {
         return Ok(());
@@ -43,17 +34,23 @@ pub unsafe fn enumerate<I: Clone>(
     Ok(())
 }
 
-pub fn str_from_const_char<'a>(ptr: *const c_char) -> Result<&'a str, XrResult> {
+pub fn str_from_const_char<'a>(ptr: *const c_char) -> Result<&'a str, XrErr> {
     if ptr.is_null() {
-        return Err(XrResult::ERROR_VALIDATION_FAILURE);
+        return Err(XrErr::ERROR_VALIDATION_FAILURE);
     }
 
     unsafe { CStr::from_ptr(ptr) }
         .to_str()
-        .map_err(|_| XrResult::ERROR_VALIDATION_FAILURE)
+        .map_err(|_| XrErr::ERROR_VALIDATION_FAILURE)
 }
 
-pub fn copy_str_to_buffer(string: &str, buf: &mut [c_char]) {
-    bytemuck::cast_slice_mut(&mut buf[..string.len()]).copy_from_slice(string.as_bytes());
-    buf[string.len()] = 0;
+pub fn copy_str_to_buffer<const N: usize>(string: &str, buf: &mut [c_char; N]) {
+    buf.fill(0);
+    unsafe {
+        std::ptr::copy_nonoverlapping(
+            string.as_ptr() as *const i8,
+            buf.as_mut_ptr(),
+            string.len().min(N),
+        )
+    }
 }
